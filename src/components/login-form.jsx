@@ -37,21 +37,21 @@ export function LoginForm() {
     };
 
     return (
-        <div className="flex flex-col w-86">
+        <div className="flex flex-col w-80">
             {!isLoggedIn ? (
                 <>
-                    <h1 className="text-4xl text-white text-center p-6 font-bold">
+                    <h1 className="text-3xl text-white text-center p-6 font-bold">
                         Bitte Anmelden
                     </h1>
                     <input
-                        className="p-2 mb-4 text-black"
+                        className="p-2 px-3 mb-4 text-black"
                         type="email"
                         placeholder="Email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
                     <input
-                        className="p-2 mb-4 text-black"
+                        className="p-2 px-3 mb-4 text-black"
                         type="password"
                         placeholder="Passwort"
                         value={password}

@@ -1,61 +1,93 @@
-import { useState } from "react";
+import { useReducer } from "react";
 import { login, logout } from "../utils/server-mock";
 
+const loginFormReducer = (state, action) => {
+    switch (action.type) {
+        case "field":
+            return { ...state, [action.field]: action.value };
+        case "login-start":
+            return { ...state, isLoading: true };
+        case "login-success":
+            return { ...state, isLoading: false, isLoggedIn: true };
+        case "login-error":
+            return { ...state, isLoading: false, error: action.value };
+        case "logout-start":
+            return { ...state, isLoading: true };
+        case "logout-success":
+            return { ...state, isLoading: false, isLoggedIn: false };
+        case "logout-error":
+            return { ...state, isLoading: false, error: action.value };
+
+        default:
+            return state;
+    }
+};
+
+const initialState = {
+    email: "",
+    password: "",
+    error: "",
+    isLoading: false,
+    isLoggedIn: false,
+};
+
 export function LoginForm() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [state, dispatch] = useReducer(loginFormReducer, initialState);
+
+    const { email, password, error, isLoading, isLoggedIn } = state;
 
     const sendLogin = async () => {
-        setIsLoading(true);
         try {
+            dispatch({ type: "login-start" });
             const response = await login(email, password);
-            setEmail("");
-            setPassword("");
-            setError("");
-            setIsLoggedIn(true);
+            dispatch({ type: "login-success" });
         } catch (e) {
-            setError(e);
-        } finally {
-            setIsLoading(false);
+            dispatch({ type: "login-error", value: e });
         }
     };
 
     const sendLogOut = async () => {
-        setIsLoading(true);
         try {
+            dispatch({ type: "logout-start" });
             const response = await logout();
-            setError("");
-            setIsLoggedIn(false);
+            dispatch({ type: "logout-success" });
         } catch (e) {
-            setError(e);
-        } finally {
-            setIsLoading(false);
+            dispatch({ type: "logout-error", value: e });
         }
     };
 
     return (
-        <div className="flex flex-col w-86">
+        <div className="flex flex-col w-80">
             {!isLoggedIn ? (
                 <>
-                    <h1 className="text-4xl text-white text-center p-6 font-bold">
+                    <h1 className="text-3xl text-white text-center p-6 font-bold">
                         Bitte Anmelden
                     </h1>
                     <input
-                        className="p-2 mb-4 text-black"
+                        className="p-2 px-3 mb-4 text-black"
                         type="email"
                         placeholder="Email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) =>
+                            dispatch({
+                                type: "field",
+                                field: "email",
+                                value: e.target.value,
+                            })
+                        }
                     />
                     <input
-                        className="p-2 mb-4 text-black"
+                        className="p-2 px-3 mb-4 text-black"
                         type="password"
                         placeholder="Passwort"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(e) =>
+                            dispatch({
+                                type: "field",
+                                field: "password",
+                                value: e.target.value,
+                            })
+                        }
                     />
                 </>
             ) : null}

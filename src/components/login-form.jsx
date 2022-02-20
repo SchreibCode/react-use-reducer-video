@@ -37,11 +37,11 @@ export function LoginForm() {
     };
 
     return (
-        <div className="flex flex-col w-80">
+        <div className="flex flex-col w-86">
             {!isLoggedIn ? (
                 <>
                     <h1 className="text-4xl text-white text-center p-6 font-bold">
-                        Anmeldung
+                        Bitte Anmelden
                     </h1>
                     <input
                         className="p-2 mb-4 text-black"

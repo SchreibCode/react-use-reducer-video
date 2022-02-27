@@ -1,6 +1,6 @@
-<img src="https://github.com/SchreibCode/react-use-reducer-video/blob/main/public/react-use-reducer-jpg" width="450" alt="Youtube Thumbnail"/>
+<img src="https://github.com/SchreibCode/react-use-reducer-video/blob/main/public/react-use-reducer.jpg" width="450" alt="Youtube Thumbnail"/>
 
-# Thema
+# React useReducer
 
 - In diesem Repository findest du den Code zum Video: "Lern useReducer in 34 Minuten - Deutsches Tutorial".
 - Falls du das Video noch nicht gesehen hast kannst du es hier: 
